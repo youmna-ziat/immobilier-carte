@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { MapComponent } from './components/map/map';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  standalone: true,
+  imports: [MapComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
