@@ -1,4 +1,23 @@
-<div class="map-container">
-  <h1 class="map-title">Immobilier-map</h1>
-  <div id="map" style="height: 400px; width: 100%;"></div>
+<div class="map-layout">
+  <!-- Sidebar principale fixe -->
+  <app-sidebar></app-sidebar><!-- Zone droite : carte + panneau info -->
+  <div class="map-main">
+    <div id="map" class="map-area"></div><!-- Panneau d'infos flottant di bien selectionne -->
+    <div class="property-info" [class.visible]="sidebarVisible() && selectedProperty()">
+  <ng-container *ngIf="selectedProperty() as bien">
+    <button class="close-btn" (click)="sidebarVisible.set(false)">✕</button>
+    <h3>{{ bien['Entité gestionnaire'] }}</h3>
+    <p><em>{{ bien['Désignation'] }}</em></p>
+
+    <img *ngIf="bien['Phtoto 1']" [src]="bien['Phtoto 1']" alt="Photo du bien" />
+
+    <ul class="info-list">
+      <li><i class="fas fa-building"></i> <strong>Type :</strong> {{ bien.Type }}</li>
+      <li><i class="fas fa-hashtag"></i> <strong>Référence :</strong> {{ bien['Référence (Réquisition/Titre foncier/contrat locationà)'] }}</li>
+      <li><i class="fas fa-dollar-sign"></i> <strong>Montant :</strong> {{ bien.Montant }}</li>
+      <!-- Ajoute ici d’autres infos importantes si besoin -->
+    </ul>
+  </ng-container>
+</div>
+  </div>
 </div>
