@@ -1,0 +1,19 @@
+<div class="searchbar-container" *ngIf="visible">
+  <div class="searchbar-popup">
+    <input
+      #searchInput
+      type="text"
+      [(ngModel)]="query"
+      placeholder="Nom ou coordonnees"
+      class="search-input"
+    />
+    <button (click)="search()" class="search-button"><svg xmlns="http://www.w3.org/2000/svg" width="34" height="24"
+           viewBox="0 0 24 24" fill="none" stroke="#069bda"
+           stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+           class="icon">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+  </div>
+</div>

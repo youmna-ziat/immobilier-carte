@@ -1,21 +1,27 @@
 <div class="map-layout">
-  <!-- Sidebar principale fixe -->
-  <app-sidebar></app-sidebar><!-- Zone droite : carte + panneau info -->
+
+  <app-sidebar (searchClicked)="onSearchClicked()"></app-sidebar>
   <div class="map-main">
-    <div id="map" class="map-area"></div><!-- Panneau d'infos flottant di bien selectionne -->
+
+    <div id="map" class="map-area"></div>
+     
+    <app-search-bar [visible]="showSearchBar()" [biens]="biens" (bienTrouve)="onBienTrouve($event)"></app-search-bar>
     <div class="property-info" [class.visible]="sidebarVisible() && selectedProperty()">
-  <ng-container *ngIf="selectedProperty() as bien">
+    
+    <ng-container *ngIf="selectedProperty() as bien">
+
     <button class="close-btn" (click)="sidebarVisible.set(false)">✕</button>
+    <img *ngIf="bien['Phtoto 1']" [src]="bien['Phtoto 1']" alt="Photo du bien" />
     <h3>{{ bien['Entité gestionnaire'] }}</h3>
     <p><em>{{ bien['Désignation'] }}</em></p>
 
-    <img *ngIf="bien['Phtoto 1']" [src]="bien['Phtoto 1']" alt="Photo du bien" />
 
     <ul class="info-list">
       <li><i class="fas fa-building"></i> <strong>Type :</strong> {{ bien.Type }}</li>
       <li><i class="fas fa-hashtag"></i> <strong>Référence :</strong> {{ bien['Référence (Réquisition/Titre foncier/contrat locationà)'] }}</li>
-      <li><i class="fas fa-dollar-sign"></i> <strong>Montant :</strong> {{ bien.Montant }}</li>
-      <!-- Ajoute ici d’autres infos importantes si besoin -->
+      <li><i class="fas fa-dollar-sign"></i> <strong>Montant(dh) :</strong> {{ bien.Montant }}</li>
+      <li><i class="fas fa-dollar-sign"></i> <strong>Type de propritété :</strong> {{ bien['Type de propritété'] }}</li>
+  
     </ul>
   </ng-container>
 </div>
