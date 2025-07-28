@@ -1,0 +1,10 @@
+<div class="filter-container">
+  <span
+    *ngFor="let type of types"
+    (click)="choisirType(type)"
+    [class.bubble]="true"
+    [class.active]="selected === type"
+  >
+    {{ type }}
+  </span>
+</div>

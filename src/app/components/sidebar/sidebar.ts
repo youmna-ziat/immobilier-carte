@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchBar } from '../components/search-bar/search-bar';
+import { SearchBar } from '../search-bar/search-bar';
 
 
 @Component({

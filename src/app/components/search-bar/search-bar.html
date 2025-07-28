@@ -4,6 +4,7 @@
       #searchInput
       type="text"
       [(ngModel)]="query"
+      (input)="search()"
       placeholder="Nom ou coordonnees"
       class="search-input"
     />
