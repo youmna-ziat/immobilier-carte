@@ -1,46 +1,61 @@
 .sidebar {
-  width: 70px;
+  width: 80px;
   height: 100vh;
-  background-color: #e8f0fe;
+  background-color: #f5f9ff;
+  border-right: 1px solid #e0e6ed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  padding: 2rem 0;
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease-in-out;
 }
 
 .logo img {
-  width: 40px;
+  width: 44px;
   height: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
+  transition: transform 0.3s ease;
+}
+.logo img:hover {
+  transform: scale(1.05);
 }
 
 .icons {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 
 button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 10px;
-  transition: background-color 0.2s;
+  padding: 10px;
+  border-radius: 14px;
+  transition: background 0.25s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
-  background-color: #d0e2ff;
+  background: rgba(100, 149, 237, 0.12); /* Soft cornflower blue */
+  transform: translateY(-1px);
 }
 
 .icon {
-  stroke: #3a4e66;
   width: 24px;
   height: 24px;
+  stroke: #445b78;
+  transition: stroke 0.3s ease;
+}
+
+button:hover .icon {
+  stroke: #1d3557;
 }
 
 .spacer {
@@ -48,5 +63,5 @@ button:hover {
 }
 
 .bottom-icon {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }

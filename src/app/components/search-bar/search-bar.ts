@@ -31,7 +31,7 @@ export class SearchBar {
   let bien;
 
   if (parts.length === 2 && !isNaN(Number(parts[0])) && !isNaN(Number(parts[1]))) {
-    // Recherche par coordonnées (latitude + longitude)
+    
     const latInput = parseFloat(parts[0]);
     const lngInput = parseFloat(parts[1]);
 
@@ -41,7 +41,7 @@ export class SearchBar {
       return lat === latInput && lng === lngInput;
     });
   } else {
-    // Recherche par nom
+    
     bien = this.biens.find(b =>{
       const designation = b.Désignation?.toLowerCase() || '';
     return parts.every(word => designation.includes(word));
@@ -57,7 +57,7 @@ export class SearchBar {
 }
 
  focusInput(){
-  this.searchInputRef?.nativeElement?.focus(); //.nativeElement te donne l’objet DOM brut de l’élément HTML ciblé.
+  this.searchInputRef?.nativeElement?.focus(); 
  }
 
  getQuery(): string {

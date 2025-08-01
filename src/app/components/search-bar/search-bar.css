@@ -1,7 +1,7 @@
 .searchbar-container {
   position: absolute;
-  top: 38px;
-  left: 20px; 
+  top: 30px;
+  left: 26px; 
   z-index: 1000;
 }
 

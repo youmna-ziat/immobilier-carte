@@ -210,3 +210,53 @@ app-sidebar {
   from { opacity: 0; transform: translate(-50%, -10px); }
   to   { opacity: 1; transform: translate(-50%, 0); }
 }
+
+.liste-entreprises {
+  position: absolute;
+  top: 120px; /* ajuste selon ton besoin */
+  left: 0px; /* ou autre pour bien le placer */
+  z-index: 1100;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  padding: 1.25rem;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+  width: 250px;
+}
+
+.liste-entreprises ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.liste-entreprises li {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.liste-entreprises li:hover {
+  background-color: #e0f2fe;
+  transform: translateX(4px);
+  border-color: #90cdf4;
+}
+
+.liste-entreprises li:active {
+  background-color: #bae6fd;
+}
+
+.container-centrale {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}

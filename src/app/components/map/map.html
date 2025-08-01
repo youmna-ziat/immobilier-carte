@@ -1,11 +1,23 @@
 <div class="map-layout">
   
-  <app-sidebar (searchClicked)="onSearchClicked()"></app-sidebar>
+  <app-sidebar 
+  (searchClicked)="onSearchClicked()"
+  (listClicked)="onListClicked()"
+  ></app-sidebar>
 
   
   <div class="map-main">
     
-    
+  <div class="liste-entreprises" *ngIf="listVisible()">
+  <h3>Entités gestionnaires</h3>
+  <ul>
+    <li *ngFor="let entite of entitesGestionnaires()" (click)="filtrerParEntite(entite)">
+  {{ entite }}
+</li>
+  
+  </ul>
+</div>
+
   <div class="map-overlay-controls-row">
     <app-type-filtre
       *ngIf="biens.length > 0"

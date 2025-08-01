@@ -25,7 +25,8 @@ export class MapComponent implements OnInit {
   sidebarVisible = signal(false);
   showSearchBar = signal(true);
   errorMessage: string | null = null;
-
+  listVisible = signal(false);
+  entitesGestionnaires = signal<string[]>([]);
 
   map!: L.Map;
   private highlightMarker: Marker | null = null;
@@ -37,18 +38,16 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
 
-    delete (Icon.Default.prototype as any)._getIconUrl;
-
     this.initMap();
 
     this.biensService.getBiens().subscribe((data: BienImmobilier[]) => {
-      this.biens = data; // Stocke les données originales pour les filtres & recherche
+      this.biens = data; 
       this.afficherBiensSurMap(data);
     });
   }
 
   initMap(): void {
-    this.map = L.map('map').setView([33.5899, -7.6039], 10);
+    this.map = L.map('map').setView([31.7917, -7.0926], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
@@ -71,7 +70,6 @@ export class MapComponent implements OnInit {
           this.sidebarVisible.set(true);
         });
 
-        marker.addTo(this.map);
         this.markers.push({ bien, marker });
     }
     });
@@ -83,9 +81,9 @@ export class MapComponent implements OnInit {
     const doitAfficher = !utilisation || bien.Utilisation === utilisation;
 
     if (doitAfficher) {
-      marker.addTo(this.map); // Montre le marqueur
+      marker.addTo(this.map); 
     } else {
-      this.map.removeLayer(marker); // Cache le marqueur
+      this.map.removeLayer(marker); 
     }
   });
   }
@@ -96,12 +94,14 @@ export class MapComponent implements OnInit {
    
 
   onBienTrouve(bien: BienImmobilier | undefined) {
-  // D'abord, on supprime le clignotement précédent s'il existe
+  
   if (this.highlightMarker) {
     this.map.removeLayer(this.highlightMarker);
     this.highlightMarker = null;
   }
-  const query = this.searchBarComponent?.getQuery().trim() || '';
+  const rawQuery = this.searchBarComponent?.getQuery();
+  const query = typeof rawQuery === 'string' ? rawQuery.trim() : '';
+
 
   if (!bien) {
   this.sidebarVisible.set(false);
@@ -124,7 +124,7 @@ export class MapComponent implements OnInit {
   const lat = parseFloat(latStr?.toString().trim());
   const lng = parseFloat(lngStr?.toString().trim());
 
-  if (lat && lng) {
+  if (!isNaN(lat) && !isNaN(lng)) {
     this.map.flyTo([lat, lng], 15, { animate: true, duration: 1.5 });
   }
 
@@ -178,42 +178,51 @@ export class MapComponent implements OnInit {
 
 
   onSearchClicked() {
-    // Fait apparaître le curseur directement dans la search bar
+  
     this.searchBarComponent?.focusInput();
   }
 
   getIconForType(type: string): L.Icon {
-    let iconUrl = 'images/pin-default.png';
-
-    switch (type?.toLowerCase()) {
-      case 'immeuble':
-        iconUrl = 'images/circle-button.png';
-        break;
-      case 'appartement':
-        iconUrl = 'images/home.png';
-        break;
-      case 'parking':
-        iconUrl = 'images/parking.png';
-        break;
-      case 'chalet':
-        iconUrl = 'images/orange.png';
-        break;
-      case 'local':
-        iconUrl = 'images/school.png';
-        break;
-    }
-    return L.icon({
-      iconUrl,
-      iconSize: [20, 30],
-      iconAnchor: [10, 20],
-      popupAnchor: [0, -40]
-    });
-
-    
+  return L.icon({
+    iconUrl: 'images/pin.png', 
+    iconSize: [20, 30],
+    iconAnchor: [10, 20],
+    popupAnchor: [0, -40]
+  });
 }
+
 closeSidebar(): void {
   this.sidebarVisible.set(false);
-  this.selectedProperty.set(null); // On réinitialise le bien sélectionné
+  this.selectedProperty.set(null); 
 }
 
+onListClicked() {
+  this.listVisible.update(prev => !prev);
+  if (this.listVisible()) {
+    const entites: string[] = (this.biens as BienImmobilier[])
+      .map((b: BienImmobilier) => b['Entité gestionnaire'])
+      .filter((entite): entite is string => typeof entite === 'string' && entite.trim() !== '');
+
+    const uniques = Array.from(new Set(entites));
+    this.entitesGestionnaires.set(uniques);
+  }
+}
+
+filtrerParEntite(entite: string): void {
+  
+  this.markers.forEach(({ bien, marker }) => {
+    const doitAfficher = bien['Entité gestionnaire'] === entite;
+    if (doitAfficher) {
+      marker.addTo(this.map);
+    } else {
+      this.map.removeLayer(marker);
+    }
+  });
+
+  const bienActuel = this.selectedProperty();
+  if (bienActuel && bienActuel['Entité gestionnaire'] !== entite) {
+    this.selectedProperty.set(null);
+    this.sidebarVisible.set(false);
+  }
+}
 }

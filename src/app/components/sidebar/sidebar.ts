@@ -24,8 +24,11 @@ export class Sidebar {
     this.searchClicked.emit(); 
   }
 
+  @Output() listClicked = new EventEmitter<void>();
+
   toggleList() {
     this.showList.update(prev => !prev);
-      if (this.showList()) this.showSearchBar.set(false);
+    if (this.showList()) this.showSearchBar.set(false);
+    this.listClicked.emit();
   }
 }
