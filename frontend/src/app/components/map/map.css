@@ -1,0 +1,255 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.map-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+app-sidebar {
+  width: 80px;
+  flex-shrink: 0;
+  z-index: 1001;
+}
+
+.map-main {
+  flex-grow: 1;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 80px);
+}
+
+#map.map-area {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* CORRECTION : left:0 au lieu de left:450px, largeur réduite */
+.property-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 340px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+  padding: 0 0 20px 0;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+}
+
+/* CORRECTION : classe .visible qui active le slide-in */
+.property-info.visible {
+  transform: translateX(0);
+}
+
+.property-info img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.property-info h3 {
+  font-size: 1.2em;
+  color: #004085;
+  margin: 14px 14px 4px;
+}
+
+.property-info p {
+  margin: 0 14px 10px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 20px;
+}
+
+.info-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9em;
+  color: #333;
+  padding: 8px 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-list li i {
+  color: #3b82f6;
+  min-width: 16px;
+  margin-top: 2px;
+}
+
+/* CORRECTION : bouton ✕ rond, bien visible sur l'image */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.close-btn:hover {
+  background: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+}
+
+/* Controls filtres + search en haut à droite */
+.map-overlay-controls-row {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+}
+
+/* CORRECTION : liste avec header pour le bouton de fermeture */
+.liste-entreprises {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  z-index: 1100;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  padding: 1rem;
+  max-height: 380px;
+  overflow-y: auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 230px;
+}
+
+/* CORRECTION : nouveau — header avec titre + bouton fermer */
+.liste-entreprises-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.liste-entreprises-header h3 {
+  font-size: 0.95em;
+  color: #1a3a5c;
+  margin: 0;
+}
+
+.liste-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #888;
+  line-height: 1;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.liste-close-btn:hover {
+  color: #e74c3c;
+}
+
+.liste-entreprises ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.liste-entreprises li {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  font-size: 0.88em;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.liste-entreprises li:hover {
+  background-color: #e0f2fe;
+  transform: translateX(3px);
+  border-color: #90cdf4;
+}
+
+.error-message {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: #ffdddd;
+  color: #d8000c;
+  padding: 10px 20px;
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.leaflet-marker-icon.blinking-marker {
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.custom-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-marker .label {
+  margin-top: 4px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}

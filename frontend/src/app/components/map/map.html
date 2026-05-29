@@ -1,0 +1,102 @@
+<div class="map-layout">
+
+  <app-sidebar
+    (searchClicked)="onSearchClicked()"
+    (listClicked)="onListClicked()">
+  </app-sidebar>
+
+  <div class="map-main">
+
+    <!-- CORRECTION : header avec bouton fermer -->
+    <div class="liste-entreprises" *ngIf="listVisible()">
+      <div class="liste-entreprises-header">
+        <h3>Entités gestionnaires</h3>
+        <button class="liste-close-btn" (click)="onListClicked()" title="Fermer">✕</button>
+      </div>
+      <ul>
+        <li *ngFor="let entite of entitesGestionnaires()" (click)="filtrerParEntite(entite)">
+          {{ entite }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="map-overlay-controls-row">
+      <app-type-filtre
+        *ngIf="biens.length > 0"
+        [types]="getUtilisationsDisponibles()"
+        (filtreChange)="filtrerParUtilisation($event)">
+      </app-type-filtre>
+
+      <app-search-bar
+        [visible]="showSearchBar()"
+        [biens]="biens"
+        (bienTrouve)="onBienTrouve($event)">
+      </app-search-bar>
+    </div>
+
+    <div *ngIf="errorMessage !== null" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div id="map" class="map-area"></div>
+
+    <!-- CORRECTION : [class.visible] au lieu de *ngIf pour que la transition CSS fonctionne -->
+    <div class="property-info" [class.visible]="sidebarVisible() && selectedProperty()">
+      <ng-container *ngIf="selectedProperty() as bien">
+
+  <button class="close-btn" (click)="closeSidebar()" title="Fermer">
+    ✕
+  </button>
+
+  <img
+    *ngIf="bien.photo"
+    [src]="bien.photo"
+    alt="Photo du bien"
+  />
+
+  <h3>{{ bien.entiteGestionnaire }}</h3>
+
+  <p>
+    <em>{{ bien.designation }}</em>
+  </p>
+
+  <ul class="info-list">
+
+    <li>
+      <strong>Type :</strong>
+      {{ bien.type }}
+    </li>
+
+    <li>
+      <strong>Référence :</strong>
+      {{ bien.reference }}
+    </li>
+
+    <li>
+      <strong>Montant :</strong>
+      {{ bien.montant }} DH
+    </li>
+
+    <li>
+      <strong>Type de propriété :</strong>
+      {{ bien.typePropriete }}
+    </li>
+
+    <li>
+      <strong>Utilisation :</strong>
+      {{ bien.utilisation }}
+    </li>
+
+    <li>
+      <strong>Ville :</strong>
+      {{ bien.ville }},
+      {{ bien.region }}
+    </li>
+
+  </ul>
+
+</ng-container>
+    </div>
+
+  </div>
+</div>

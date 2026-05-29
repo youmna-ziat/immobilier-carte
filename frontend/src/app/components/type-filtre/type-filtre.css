@@ -1,0 +1,33 @@
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background-color: transparent;
+  padding: 0;
+}
+
+/* CORRECTION : taille réduite, margin-top supprimé */
+.bubble {
+  background-color: white;
+  color: #003366;
+  padding: 6px 14px;
+  font-size: 0.82em;
+  border-radius: 20px;
+  border: 1.5px solid #c8dff7;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+}
+
+.bubble:hover {
+  background-color: #a3d4ff;
+  color: #001f33;
+}
+
+.bubble.active {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
+  border-color: #0056b3;
+}

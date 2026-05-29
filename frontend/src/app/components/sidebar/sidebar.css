@@ -1,0 +1,68 @@
+.sidebar {
+  width: 80px;
+  height: 100vh;
+  background-color: #f5f9ff;
+  border-right: 1px solid #e0e6ed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease-in-out;
+}
+
+.logo img {
+  width: 44px;
+  height: auto;
+  margin-bottom: 2.5rem;
+  transition: transform 0.3s ease;
+}
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.icons {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* CORRECTION : .sidebar button au lieu de button (évite de polluer toute l'appli) */
+.sidebar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 14px;
+  transition: background 0.25s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar button:hover {
+  background: rgba(100, 149, 237, 0.12);
+  transform: translateY(-1px);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  stroke: #445b78;
+  transition: stroke 0.3s ease;
+}
+
+.sidebar button:hover .icon {
+  stroke: #1d3557;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.bottom-icon {
+  margin-bottom: 2rem;
+}
